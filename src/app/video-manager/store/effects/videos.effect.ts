@@ -33,6 +33,7 @@ import {
 } from 'rxjs';
 import {
   catchError,
+  filter,
   map,
   switchMap,
   tap,
@@ -50,6 +51,8 @@ import {
   Video
 } from '../models';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { WarningDialogComponent } from '../../components/warning-dialog/warning-dialog.component';
 
 @Injectable()
 export class VideosEffect {
@@ -58,6 +61,7 @@ export class VideosEffect {
     private service: VideosService,
     private store$: Store<VideosModuleState>,
     private router: Router,
+    private matDialog: MatDialog,
   ) {
   }
 
@@ -116,6 +120,14 @@ export class VideosEffect {
   @Effect()
   deleteVideo$: Observable<any> = this.actions.pipe(
     ofType(DELETE_VIDEO),
+    switchMap((action: DeleteVideo) => {
+      return this.matDialog.open(WarningDialogComponent).afterClosed()
+        .pipe(
+          map(result => [result, action])
+        );
+    }),
+    filter(([result]: [boolean, DeleteVideo]) => result),
+    map(([, action]: [boolean, DeleteVideo]) => action),
     withLatestFrom(this.store$.pipe(select(getAuthors))),
     map(([action, authors]: [DeleteVideo, Author[]]) => {
       let author = authors.find(author => author.id === action.authorId);

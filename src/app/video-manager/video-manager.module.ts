@@ -16,9 +16,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { WarningDialogComponent } from './components/warning-dialog/warning-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
-  declarations: [VideoManagerComponent, VideoItemComponent, VideoPageComponent],
+  declarations: [VideoManagerComponent, VideoItemComponent, VideoPageComponent, WarningDialogComponent],
   imports: [
     CommonModule,
     VideoManagerRoutingModule,
@@ -32,6 +34,7 @@ import { MatInputModule } from '@angular/material/input';
     MatInputModule,
     ReactiveFormsModule,
     MatSelectModule,
+    MatDialogModule,
   ]
 })
 export class VideoManagerModule { }

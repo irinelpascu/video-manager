@@ -1,0 +1,8 @@
+<h1>{{data?.title || 'Warning!'}}</h1>
+<h2>{{data?.message || 'This action is irreversible.'}}</h2>
+<div matDialogActions>
+  <button type="submit" mat-raised-button color="primary"
+    (click)="dialogRef.close(true)">{{data?.yesLabel || 'OK'}}</button>
+  <button type="button" mat-button color="accent"
+    (click)="dialogRef.close(false)">{{data?.noLabel || 'Cancel'}}</button>
+</div>
