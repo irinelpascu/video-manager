@@ -50,8 +50,8 @@ export class LoadDataGuard implements CanActivate {
       .pipe(
         tap(([authors, categories]: [Author[], Category[]]) => {
           if (!authors && !categories) {
-            this.store$.dispatch(new GetAuthors());
             this.store$.dispatch(new GetCategories());
+            this.store$.dispatch(new GetAuthors());
           }
         }),
         map(([authors, categories]: [Author[], Category[]]) => !!authors && !!categories),

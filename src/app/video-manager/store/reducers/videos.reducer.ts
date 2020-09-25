@@ -39,7 +39,7 @@ export function videosReducer(state = videosInitialState, action: VideosAction):
       return {
         ...state,
         authors: action.payload,
-        videos: extractVideosFromAuthors(action.payload)
+        videos: extractVideosFromAuthors(action.payload, state.categories)
       };
     }
     case GET_CATEGORIES_SUCCESS: {
@@ -58,7 +58,7 @@ export function videosReducer(state = videosInitialState, action: VideosAction):
     case CREATE_VIDEO_SUCCESS:
     case UPDATE_VIDEO_SUCCESS: {
       const authors: Author[] = state.authors.map(author => author.id === action.payload.id ? action.payload : author);
-      const videos: VideoUI[] = extractVideosFromAuthors(authors);
+      const videos: VideoUI[] = extractVideosFromAuthors(authors, state.categories);
       return {
         ...state,
         authors,
@@ -89,11 +89,16 @@ export const getSortKey = (state: VideosState) => state.sortKey;
 export const getSortDir = (state: VideosState) => state.sortDir;
 export const getSearchTerm = (state: VideosState) => state.searchTerm;
 
-const extractVideosFromAuthors = (authors: Author[]): VideoUI[] => {
+const extractVideosFromAuthors = (authors: Author[], categories: Category[]): VideoUI[] => {
+  const categoriesObj = categories.reduce((acc: any, crt: Category) => {
+    acc[crt.id] = crt.name;
+    return acc;
+  }, {});
   return authors.reduce((acc: VideoUI[], crt: Author) => {
     acc.push(
       ...crt.videos.map((video: Video) => ({
         ...video,
+        categories: video.catIds.map(id => categoriesObj[id]).join(', '),
         author: crt.name,
         authorId: crt.id,
         bestFormat: extractVideoBestFormat(video)

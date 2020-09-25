@@ -23,21 +23,6 @@
       "name": "David Munch",
       "videos": [
         {
-          "id": 1,
-          "name": "Set the Moon",
-          "catIds": [
-            1,
-            2
-          ],
-          "releaseDate": "2020-09-25",
-          "formats": {
-            "one": {
-              "res": "1080p",
-              "size": 1000
-            }
-          }
-        },
-        {
           "id": 2,
           "name": "Lights",
           "catIds": [
@@ -134,6 +119,21 @@
             }
           },
           "releaseDate": "2018-08-10"
+        },
+        {
+          "id": 1,
+          "name": "Set the Moon",
+          "catIds": [
+            1,
+            2
+          ],
+          "releaseDate": "2020-09-25",
+          "formats": {
+            "one": {
+              "res": "1080p",
+              "size": 1000
+            }
+          }
         }
       ]
     }

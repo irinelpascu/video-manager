@@ -25,6 +25,7 @@ export interface Author {
 export interface VideoUI {
   id: number;
   catIds: number[];
+  categories: string;
   name: string;
   formats: { [key: string]: Format };
   releaseDate: string;
