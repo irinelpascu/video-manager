@@ -10,6 +10,7 @@ import { VideosModuleState } from '../../store/reducers';
 import { Observable } from 'rxjs';
 import { VideoUI } from '../../store/models';
 import { getVideos } from '../../store/selectors';
+import { DeleteVideo } from '../../store/actions';
 
 @Component({
   selector: 'app-video-manager',
@@ -27,7 +28,7 @@ export class VideoManagerComponent implements OnInit {
     this.videos$ = this.store$.pipe(select(getVideos));
   }
 
-  onDelete(videoId: number) {
-
+  onDelete(authorId: number, videoId: number) {
+    this.store$.dispatch(new DeleteVideo(authorId, videoId));
   }
 }

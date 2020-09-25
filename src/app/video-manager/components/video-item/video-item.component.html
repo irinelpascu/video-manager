@@ -6,7 +6,7 @@
     <div class="col-d">{{FORMAT_QUALITY[video.bestFormat]}} {{video.bestFormat}}</div>
     <div class="col-e">{{video.releaseDate | amParse:'YYYY-MM-DD' | amDateFormat:'LL'}}</div>
     <div class="col-f">
-      <button mat-icon-button color="warn" (click)="delete.emit()">
+      <button mat-icon-button color="warn" (click)="onDelete($event)">
         <mat-icon>delete</mat-icon>
       </button>
     </div>

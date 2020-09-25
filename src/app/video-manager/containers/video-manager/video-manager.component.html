@@ -10,7 +10,7 @@
   </div>
   <app-video-item *ngFor="let video of videos$ | async" [routerLink]="['edit', video.authorId, video.id]"
     [video]="video"
-    (delete)="onDelete(video.id)">
+    (delete)="onDelete(video.authorId, video.id)">
   </app-video-item>
 </mat-card>
 <button mat-fab color="primary" [routerLink]="['new']">

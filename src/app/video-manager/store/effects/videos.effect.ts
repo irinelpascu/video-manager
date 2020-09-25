@@ -5,6 +5,10 @@ import {
   ofType
 } from '@ngrx/effects';
 import {
+  DELETE_VIDEO,
+  DeleteVideo,
+  DeleteVideoFail,
+  DeleteVideoSuccess,
   GET_AUTHOR,
   GET_AUTHORS,
   GET_CATEGORIES,
@@ -91,6 +95,28 @@ export class VideosEffect {
       .pipe(
         map(author => new UpdateVideoSuccess(author)),
         catchError(err => of(new UpdateVideoFail(err)))
+      )
+    )
+  );
+
+  @Effect()
+  deleteVideo$: Observable<any> = this.actions.pipe(
+    ofType(DELETE_VIDEO),
+    withLatestFrom(this.store$.pipe(select(getAuthors))),
+    map(([action, authors]: [DeleteVideo, Author[]]) => {
+      let author = authors.find(author => author.id === action.authorId);
+      if (author) {
+        author = {
+          ...author,
+          videos: author.videos.filter(video => video.id !== action.videoId)
+        };
+      }
+      return [author, action.videoId];
+    }),
+    switchMap(([author, videoId]: [Author, number]) => this.service.updateAuthor(author)
+      .pipe(
+        map(author => new DeleteVideoSuccess(author, videoId)),
+        catchError(err => of(new DeleteVideoFail(err)))
       )
     )
   );

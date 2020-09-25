@@ -69,7 +69,7 @@ export class DeleteVideo implements Action {
 export class DeleteVideoSuccess implements Action {
   readonly type = DELETE_VIDEO_SUCCESS;
 
-  constructor(public payload: Author) {
+  constructor(public payload: Author, public videoId: number) {
   }
 }
 

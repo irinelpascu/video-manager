@@ -1,4 +1,5 @@
 import {
+  DELETE_VIDEO_SUCCESS,
   GET_AUTHORS_SUCCESS,
   GET_CATEGORIES_SUCCESS,
   VideosAction
@@ -35,6 +36,13 @@ export function videosReducer(state = videosInitialState, action: VideosAction):
       return {
         ...state,
         categories: action.payload
+      };
+    }
+    case DELETE_VIDEO_SUCCESS: {
+      return {
+        ...state,
+        authors: state.authors.map(author => author.id === action.payload.id ? action.payload : author),
+        videos: state.videos.filter(video => video.id !== action.videoId)
       };
     }
   }

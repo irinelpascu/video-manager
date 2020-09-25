@@ -33,4 +33,8 @@ export class VideoItemComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  onDelete(event: MouseEvent) {
+    event.stopImmediatePropagation();
+    this.delete.emit();
+  }
 }
