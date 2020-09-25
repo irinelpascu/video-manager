@@ -9,7 +9,7 @@ export interface Format {
 }
 
 export interface Video {
-  id?: number;
+  id: number;
   catIds: number[];
   name: string;
   formats: { [key: string]: Format };
@@ -23,7 +23,7 @@ export interface Author {
 }
 
 export interface VideoUI {
-  id?: number;
+  id: number;
   catIds: number[];
   name: string;
   formats: { [key: string]: Format };

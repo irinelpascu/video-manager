@@ -8,6 +8,22 @@
     .video-list-row {
       padding: 0 16px;
       border-bottom: 1px solid lightgray;
+
+      > * {
+        display: flex;
+        align-items: center;
+        padding-right: 12px;
+        cursor: pointer;
+
+        > mat-icon {
+          margin-left: 4px;
+
+          &.rotate {
+            transform: rotate(180deg);
+          }
+        }
+      }
+
     }
 
     app-video-item {

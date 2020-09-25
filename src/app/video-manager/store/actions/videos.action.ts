@@ -130,6 +130,15 @@ export class GetCategoriesFail implements Action {
   }
 }
 
+export const CHANGE_SORT = '[Videos] Change Sort';
+
+export class ChangeSort implements Action {
+  readonly type = CHANGE_SORT;
+
+  constructor(public key: string) {
+  }
+}
+
 export type VideosAction =
   | GetAuthors
   | GetAuthorsSuccess
@@ -145,4 +154,5 @@ export type VideosAction =
   | UpdateVideoFail
   | GetCategories
   | GetCategoriesSuccess
-  | GetCategoriesFail;
+  | GetCategoriesFail
+  | ChangeSort;

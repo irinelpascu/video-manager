@@ -56,6 +56,7 @@ export class VideoPageComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.videoFormGroup = this.fb.group({
+      id: this.fb.control(undefined),
       name: this.fb.control('', Validators.required),
       author: this.fb.control('', Validators.required),
       categories: this.fb.control([], Validators.required),
@@ -79,6 +80,7 @@ export class VideoPageComponent implements OnInit, OnDestroy {
         filter(video => !!video)
       )
       .subscribe(video => this.videoFormGroup.patchValue({
+        id: video.id,
         name: video.name,
         author: video.authorId,
         categories: video.catIds,
@@ -94,6 +96,7 @@ export class VideoPageComponent implements OnInit, OnDestroy {
     this.store$.dispatch(new UpdateVideo(
       values.author,
       {
+        id: values.id,
         name: values.name,
         catIds: values.categories,
         releaseDate: moment(moment.now()).format('YYYY-MM-DD'),

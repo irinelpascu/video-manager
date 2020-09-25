@@ -1,11 +1,33 @@
 <h1>Videos</h1>
 <mat-card class="mat-elevation-z2">
   <div class="video-list-row">
-    <div class="col-a">Video name</div>
-    <div class="col-b">Author</div>
-    <div class="col-c">Category name</div>
-    <div class="col-d">Highest quality format</div>
-    <div class="col-e">Release date</div>
+    <div class="col-a" (click)="changeSort('name')">
+      Video name
+      <mat-icon *ngIf="(sortKey$ | async) === 'name'" [ngClass]="{rotate: (sortDir$ | async) === 'ASC'}">
+        sort
+      </mat-icon>
+    </div>
+    <div class="col-b" (click)="changeSort('author')">
+      Author
+      <mat-icon *ngIf="(sortKey$ | async) === 'author'" [ngClass]="{rotate: (sortDir$ | async) === 'ASC'}">
+        sort
+      </mat-icon>
+    </div>
+    <div class="col-c">
+      Category name
+    </div>
+    <div class="col-d" (click)="changeSort('bestFormat')">
+      Highest quality format
+      <mat-icon *ngIf="(sortKey$ | async) === 'bestFormat'" [ngClass]="{rotate: (sortDir$ | async) === 'ASC'}">
+        sort
+      </mat-icon>
+    </div>
+    <div class="col-e" (click)="changeSort('releaseDate')">
+      Release date
+      <mat-icon *ngIf="(sortKey$ | async) === 'releaseDate'" [ngClass]="{rotate: (sortDir$ | async) === 'ASC'}">
+        sort
+      </mat-icon>
+    </div>
     <div class="col-f"></div>
   </div>
   <app-video-item *ngFor="let video of videos$ | async" [routerLink]="['edit', video.authorId, video.id]"
