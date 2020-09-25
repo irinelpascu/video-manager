@@ -24,26 +24,18 @@
       "videos": [
         {
           "id": 1,
+          "name": "Set the Moon",
           "catIds": [
             1,
             2
           ],
-          "name": "Set the Moon",
+          "releaseDate": "2020-09-25",
           "formats": {
             "one": {
               "res": "1080p",
               "size": 1000
-            },
-            "two": {
-              "res": "720p",
-              "size": 2000
-            },
-            "three": {
-              "res": "720p",
-              "size": 900
             }
-          },
-          "releaseDate": "2018-08-09"
+          }
         },
         {
           "id": 2,

@@ -48,7 +48,7 @@ export function videosReducer(state = videosInitialState, action: VideosAction):
       return {
         ...state,
         authors: state.authors.map(author => author.id === action.payload.id ? action.payload : author),
-        videos: state.videos.filter(video => video.id !== action.videoId)
+        videos: state.videos.filter(video => video.id !== action.videoId && video.authorId !== action.payload.id)
       };
     }
     case UPDATE_VIDEO_SUCCESS: {

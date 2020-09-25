@@ -22,6 +22,7 @@ import {
   GetCategoriesFail,
   GetCategoriesSuccess,
   UPDATE_VIDEO,
+  UPDATE_VIDEO_SUCCESS,
   UpdateVideo,
   UpdateVideoFail,
   UpdateVideoSuccess,
@@ -34,6 +35,7 @@ import {
   catchError,
   map,
   switchMap,
+  tap,
   withLatestFrom
 } from 'rxjs/operators';
 import { VideosService } from '../services';
@@ -47,10 +49,16 @@ import {
   Author,
   Video
 } from '../models';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class VideosEffect {
-  constructor(private actions: Actions, private service: VideosService, private store$: Store<VideosModuleState>) {
+  constructor(
+    private actions: Actions,
+    private service: VideosService,
+    private store$: Store<VideosModuleState>,
+    private router: Router,
+  ) {
   }
 
   @Effect()
@@ -97,6 +105,12 @@ export class VideosEffect {
         catchError(err => of(new UpdateVideoFail(err)))
       )
     )
+  );
+
+  @Effect({dispatch: false})
+  goBack$: Observable<any> = this.actions.pipe(
+    ofType(UPDATE_VIDEO_SUCCESS),
+    tap(() => this.router.navigate(['/manage']))
   );
 
   @Effect()
