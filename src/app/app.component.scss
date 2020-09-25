@@ -4,6 +4,11 @@
   height: 100%;
 
   mat-toolbar {
+    strong {
+      outline: none;
+      cursor: pointer;
+    }
+
     .user {
       display: flex;
       align-items: center;
