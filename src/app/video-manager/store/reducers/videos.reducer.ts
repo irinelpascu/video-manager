@@ -1,5 +1,6 @@
 import {
   CHANGE_SORT,
+  CREATE_VIDEO_SUCCESS,
   DELETE_VIDEO_SUCCESS,
   GET_AUTHORS_SUCCESS,
   GET_CATEGORIES_SUCCESS,
@@ -54,6 +55,7 @@ export function videosReducer(state = videosInitialState, action: VideosAction):
         videos: state.videos.filter(video => video.id !== action.videoId || video.authorId !== action.payload.id)
       };
     }
+    case CREATE_VIDEO_SUCCESS:
     case UPDATE_VIDEO_SUCCESS: {
       const authors: Author[] = state.authors.map(author => author.id === action.payload.id ? action.payload : author);
       const videos: VideoUI[] = extractVideosFromAuthors(authors);

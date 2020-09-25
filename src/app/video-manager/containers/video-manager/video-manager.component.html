@@ -41,10 +41,12 @@
     </div>
     <div class="col-f"></div>
   </div>
-  <app-video-item *ngFor="let video of videos$ | async" [routerLink]="['edit', video.authorId, video.id]"
-    [video]="video"
-    (delete)="onDelete(video.authorId, video.id)">
-  </app-video-item>
+  <div class="video-list-container">
+    <app-video-item *ngFor="let video of videos$ | async" [routerLink]="['edit', video.authorId, video.id]"
+      [video]="video"
+      (delete)="onDelete(video.authorId, video.id)">
+    </app-video-item>
+  </div>
 </mat-card>
 <button mat-fab color="primary" [routerLink]="['new']">
   <mat-icon>add</mat-icon>

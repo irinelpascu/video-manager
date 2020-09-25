@@ -39,7 +39,7 @@
         },
         {
           "id": 2,
-          "name": "Lights1",
+          "name": "Lights",
           "catIds": [
             2,
             4
@@ -60,10 +60,11 @@
       "videos": [
         {
           "id": 3,
+          "name": "Fun",
           "catIds": [
             4
           ],
-          "name": "Fun",
+          "releaseDate": "2018-08-10",
           "formats": {
             "one": {
               "res": "720p",
@@ -77,8 +78,7 @@
               "res": "720p",
               "size": 2005
             }
-          },
-          "releaseDate": "2018-08-10"
+          }
         },
         {
           "id": 4,

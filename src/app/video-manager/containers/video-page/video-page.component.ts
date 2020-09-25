@@ -23,7 +23,11 @@ import {
   switchMap,
   takeUntil
 } from 'rxjs/operators';
-import { UpdateVideo } from '../../store/actions';
+import {
+  CreateVideo,
+  DeleteVideo,
+  UpdateVideo
+} from '../../store/actions';
 import {
   Author,
   Category,
@@ -50,6 +54,7 @@ export class VideoPageComponent implements OnInit, OnDestroy {
   destroy$: Subject<void> = new Subject<void>();
 
   videoFormGroup: FormGroup;
+  ownerID: number;
 
   constructor(private fb: FormBuilder, private store$: Store<VideosModuleState>, private route: ActivatedRoute) {
   }
@@ -59,7 +64,9 @@ export class VideoPageComponent implements OnInit, OnDestroy {
       id: this.fb.control(undefined),
       name: this.fb.control('', Validators.required),
       author: this.fb.control('', Validators.required),
-      categories: this.fb.control([], Validators.required),
+      catIds: this.fb.control([], Validators.required),
+      releaseDate: this.fb.control(moment(moment.now()).format('YYYY-MM-DD'), Validators.required),
+      formats: this.fb.control({one: {res: '1080p', size: 1000}}, Validators.required),
     });
     this.authors$ = this.store$.pipe(select(getAuthors));
     this.categories$ = this.store$.pipe(select(getCategories));
@@ -79,12 +86,17 @@ export class VideoPageComponent implements OnInit, OnDestroy {
         takeUntil(this.destroy$),
         filter(video => !!video)
       )
-      .subscribe(video => this.videoFormGroup.patchValue({
-        id: video.id,
-        name: video.name,
-        author: video.authorId,
-        categories: video.catIds,
-      }));
+      .subscribe(video => {
+        this.ownerID = video.authorId;
+        this.videoFormGroup.patchValue({
+          id: video.id,
+          name: video.name,
+          author: video.authorId,
+          catIds: video.catIds,
+          releaseDate: video.releaseDate,
+          formats: video.formats
+        });
+      });
   }
 
   ngOnDestroy() {
@@ -92,16 +104,12 @@ export class VideoPageComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    const values = this.videoFormGroup.value;
-    this.store$.dispatch(new UpdateVideo(
-      values.author,
-      {
-        id: values.id,
-        name: values.name,
-        catIds: values.categories,
-        releaseDate: moment(moment.now()).format('YYYY-MM-DD'),
-        formats: {one: {res: '1080p', size: 1000}}
-      }
-    ));
+    const {author, ...video} = this.videoFormGroup.value;
+
+    if (this.ownerID && this.ownerID !== author) {
+      this.store$.dispatch(new DeleteVideo(this.ownerID, video.id, true));
+    }
+
+    this.store$.dispatch(video.id ? new UpdateVideo(author, video) : new CreateVideo(author, video));
   }
 }

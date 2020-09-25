@@ -15,7 +15,7 @@
     <br>
     <mat-form-field>
       <mat-label>Video categories</mat-label>
-      <mat-select formControlName="categories" [multiple]="true">
+      <mat-select formControlName="catIds" [multiple]="true">
         <mat-option *ngFor="let category of categories$ | async" [value]="category.id">{{category.name}}</mat-option>
       </mat-select>
     </mat-form-field>

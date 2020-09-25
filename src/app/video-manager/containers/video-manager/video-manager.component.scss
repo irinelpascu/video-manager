@@ -1,14 +1,20 @@
 :host {
   flex: 1;
-  display: block;
+  display: flex;
+  flex-direction: column;
   padding: 24px 64px;
   position: relative;
+  min-height: 0;
 
   .clear-icon {
     cursor: pointer;
   }
 
   mat-card {
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+
     .video-list-row {
       padding: 0 16px;
       border-bottom: 1px solid lightgray;
@@ -30,8 +36,12 @@
 
     }
 
-    app-video-item {
-      margin-top: 8px;
+    .video-list-container {
+      overflow: auto;
+
+      app-video-item {
+        margin-top: 8px;
+      }
     }
   }
 

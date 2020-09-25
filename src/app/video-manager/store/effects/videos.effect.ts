@@ -5,19 +5,19 @@ import {
   ofType
 } from '@ngrx/effects';
 import {
+  CREATE_VIDEO,
+  CREATE_VIDEO_SUCCESS,
+  CreateVideoFail,
+  CreateVideoSuccess,
   DELETE_VIDEO,
   DeleteVideo,
   DeleteVideoFail,
   DeleteVideoSuccess,
-  GET_AUTHOR,
   GET_AUTHORS,
   GET_CATEGORIES,
-  GetAuthor,
-  GetAuthorFail,
   GetAuthors,
   GetAuthorsFail,
   GetAuthorsSuccess,
-  GetAuthorSuccess,
   GetCategories,
   GetCategoriesFail,
   GetCategoriesSuccess,
@@ -45,10 +45,13 @@ import {
   Store
 } from '@ngrx/store';
 import { VideosModuleState } from '../reducers';
-import { getAuthors } from '../selectors';
+import {
+  getAuthors,
+  getVideos
+} from '../selectors';
 import {
   Author,
-  Video
+  VideoUI
 } from '../models';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -77,12 +80,25 @@ export class VideosEffect {
   );
 
   @Effect()
-  getAuthor$: Observable<any> = this.actions.pipe(
-    ofType(GET_AUTHOR),
-    switchMap((action: GetAuthor) => this.service.getAuthor(action.authorId)
+  createVideo$: Observable<any> = this.actions.pipe(
+    ofType(CREATE_VIDEO),
+    withLatestFrom(this.store$.pipe(select(getAuthors)), this.store$.pipe(select(getVideos))),
+    map(([action, authors, videos]: [UpdateVideo, Author[], VideoUI[]]) => {
+      let author = authors.find(author => author.id === action.authorId);
+      const id = Math.max(...videos.map(video => video.id)) + 1;
+
+      if (author) {
+        author = {
+          ...author,
+          videos: [...author.videos, {...action.video, id}]
+        };
+      }
+      return author;
+    }),
+    switchMap((author: Author) => this.service.updateAuthor(author)
       .pipe(
-        map(author => new GetAuthorSuccess(author)),
-        catchError(err => of(new GetAuthorFail(err)))
+        map(author => new CreateVideoSuccess(author)),
+        catchError(err => of(new CreateVideoFail(err)))
       )
     )
   );
@@ -94,11 +110,12 @@ export class VideosEffect {
     map(([action, authors]: [UpdateVideo, Author[]]) => {
       let author = authors.find(author => author.id === action.authorId);
       if (author) {
+        const hisVideo: boolean = author.videos.some(video => video.id === action.video.id);
         author = {
           ...author,
-          videos: action.video.id
+          videos: hisVideo
             ? author.videos.map(video => video.id === action.video.id ? action.video : video)
-            : [...author.videos, {...action.video, id: this.generateVideoId(author)}]
+            : [...author.videos, action.video]
         };
       }
       return author;
@@ -113,7 +130,7 @@ export class VideosEffect {
 
   @Effect({dispatch: false})
   goBack$: Observable<any> = this.actions.pipe(
-    ofType(UPDATE_VIDEO_SUCCESS),
+    ofType(UPDATE_VIDEO_SUCCESS, CREATE_VIDEO_SUCCESS),
     tap(() => this.router.navigate(['/manage']))
   );
 
@@ -121,6 +138,9 @@ export class VideosEffect {
   deleteVideo$: Observable<any> = this.actions.pipe(
     ofType(DELETE_VIDEO),
     switchMap((action: DeleteVideo) => {
+      if (action.forced) {
+        return of([true, action]);
+      }
       return this.matDialog.open(WarningDialogComponent).afterClosed()
         .pipe(
           map(result => [result, action])
@@ -157,10 +177,4 @@ export class VideosEffect {
       )
     )
   );
-
-  private generateVideoId(author: Author): number {
-    return author.videos.reduce((acc: number, crt: Video) => {
-      return Math.max(acc, crt.id) + 1;
-    }, 0);
-  }
 }

@@ -30,26 +30,26 @@ export class GetAuthorsFail implements Action {
   }
 }
 
-export const GET_AUTHOR = '[Videos] Get Author';
-export const GET_AUTHOR_SUCCESS = '[Videos] Get Author Success';
-export const GET_AUTHOR_FAIL = '[Videos] Get Author Fail';
+export const CREATE_VIDEO = '[Videos] Create Video';
+export const CREATE_VIDEO_SUCCESS = '[Videos] Create Video Success';
+export const CREATE_VIDEO_FAIL = '[Videos] Create Video Fail';
 
-export class GetAuthor implements Action {
-  readonly type = GET_AUTHOR;
+export class CreateVideo implements Action {
+  readonly type = CREATE_VIDEO;
 
-  constructor(public authorId: number) {
+  constructor(public authorId: number, public video: Video) {
   }
 }
 
-export class GetAuthorSuccess implements Action {
-  readonly type = GET_AUTHOR_SUCCESS;
+export class CreateVideoSuccess implements Action {
+  readonly type = CREATE_VIDEO_SUCCESS;
 
-  constructor(public author: Author) {
+  constructor(public payload: Author) {
   }
 }
 
-export class GetAuthorFail implements Action {
-  readonly type = GET_AUTHOR_FAIL;
+export class CreateVideoFail implements Action {
+  readonly type = CREATE_VIDEO_FAIL;
 
   constructor(public error: any) {
   }
@@ -62,7 +62,7 @@ export const DELETE_VIDEO_FAIL = '[Videos] Delete Video Fail';
 export class DeleteVideo implements Action {
   readonly type = DELETE_VIDEO;
 
-  constructor(public authorId: number, public videoId: number) {
+  constructor(public authorId: number, public videoId: number, public forced = false) {
   }
 }
 
@@ -152,9 +152,9 @@ export type VideosAction =
   | GetAuthors
   | GetAuthorsSuccess
   | GetAuthorsFail
-  | GetAuthor
-  | GetAuthorSuccess
-  | GetAuthorFail
+  | CreateVideo
+  | CreateVideoSuccess
+  | CreateVideoFail
   | DeleteVideo
   | DeleteVideoSuccess
   | DeleteVideoFail
