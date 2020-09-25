@@ -4,6 +4,10 @@
   padding: 24px 64px;
   position: relative;
 
+  .clear-icon {
+    cursor: pointer;
+  }
+
   mat-card {
     .video-list-row {
       padding: 0 16px;

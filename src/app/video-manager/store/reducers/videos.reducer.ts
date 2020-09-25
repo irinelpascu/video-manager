@@ -3,6 +3,7 @@ import {
   DELETE_VIDEO_SUCCESS,
   GET_AUTHORS_SUCCESS,
   GET_CATEGORIES_SUCCESS,
+  SEARCH,
   UPDATE_VIDEO_SUCCESS,
   VideosAction
 } from '../actions';
@@ -19,6 +20,7 @@ export interface VideosState {
   videos: VideoUI[];
   sortKey: string;
   sortDir: string;
+  searchTerm: string;
 }
 
 const videosInitialState: VideosState = {
@@ -27,6 +29,7 @@ const videosInitialState: VideosState = {
   videos: null,
   sortKey: null,
   sortDir: null,
+  searchTerm: null,
 };
 
 export function videosReducer(state = videosInitialState, action: VideosAction): VideosState {
@@ -48,7 +51,7 @@ export function videosReducer(state = videosInitialState, action: VideosAction):
       return {
         ...state,
         authors: state.authors.map(author => author.id === action.payload.id ? action.payload : author),
-        videos: state.videos.filter(video => video.id !== action.videoId && video.authorId !== action.payload.id)
+        videos: state.videos.filter(video => video.id !== action.videoId || video.authorId !== action.payload.id)
       };
     }
     case UPDATE_VIDEO_SUCCESS: {
@@ -67,6 +70,12 @@ export function videosReducer(state = videosInitialState, action: VideosAction):
         sortKey: action.key
       };
     }
+    case SEARCH: {
+      return {
+        ...state,
+        searchTerm: action.searchTerm,
+      };
+    }
   }
   return state;
 }
@@ -76,6 +85,7 @@ export const getCategories = (state: VideosState) => state.categories;
 export const getVideos = (state: VideosState) => state.videos;
 export const getSortKey = (state: VideosState) => state.sortKey;
 export const getSortDir = (state: VideosState) => state.sortDir;
+export const getSearchTerm = (state: VideosState) => state.searchTerm;
 
 const extractVideosFromAuthors = (authors: Author[]): VideoUI[] => {
   return authors.reduce((acc: VideoUI[], crt: Author) => {

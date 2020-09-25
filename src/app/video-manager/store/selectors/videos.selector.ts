@@ -51,15 +51,27 @@ export const getSortDir: MemoizedSelector<VideosModuleState, string> = createSel
   fromReducer.getSortDir
 );
 
+export const getSearchTerm: MemoizedSelector<VideosModuleState, string> = createSelector(
+  getVideosState,
+  fromReducer.getSearchTerm
+);
+
 export const getSortedVideos: MemoizedSelector<VideosModuleState, VideoUI[]> = createSelector(
   getVideos,
   getSortDir,
   getSortKey,
-  (videos: VideoUI[], sortDir: string, sortKey: string) => {
-    if (!sortKey || !sortDir) {
+  getSearchTerm,
+  (videos: VideoUI[], sortDir: string, sortKey: string, searchTerm: string) => {
+    if (!sortKey && !sortDir && !searchTerm) {
       return videos;
     }
-    return videos.concat().sort((a, b) => {
+    let retVideos: VideoUI[] = searchTerm
+      ? videos.filter(video => video.author.toLowerCase().includes(searchTerm) || video.name.toLowerCase().includes(searchTerm))
+      : videos.concat();
+    if (!sortDir && !sortKey) {
+      return retVideos;
+    }
+    return retVideos.sort((a, b) => {
       switch (sortKey) {
         case 'bestFormat': {
           return (parseInt(a.bestFormat) - parseInt(b.bestFormat)) * (sortDir === 'DESC' ? -1 : 1);

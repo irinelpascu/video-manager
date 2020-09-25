@@ -139,6 +139,15 @@ export class ChangeSort implements Action {
   }
 }
 
+export const SEARCH = '[Videos] Search';
+
+export class Search implements Action {
+  readonly type = SEARCH;
+
+  constructor(public searchTerm: string) {
+  }
+}
+
 export type VideosAction =
   | GetAuthors
   | GetAuthorsSuccess
@@ -155,4 +164,5 @@ export type VideosAction =
   | GetCategories
   | GetCategoriesSuccess
   | GetCategoriesFail
-  | ChangeSort;
+  | ChangeSort
+  | Search;

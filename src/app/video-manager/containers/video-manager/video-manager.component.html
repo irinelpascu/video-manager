@@ -1,4 +1,15 @@
 <h1>Videos</h1>
+<br>
+<mat-form-field>
+  <mat-label>Search by name or author</mat-label>
+  <input matInput [formControl]="searchFormControl">
+  <mat-icon *ngIf="!searchFormControl.value" matSuffix color="primary">search</mat-icon>
+  <mat-icon *ngIf="searchFormControl.value" matSuffix color="primary" class="clear-icon"
+    (click)="searchFormControl.setValue('')">
+    close
+  </mat-icon>
+</mat-form-field>
+<br>
 <mat-card class="mat-elevation-z2">
   <div class="video-list-row">
     <div class="col-a" (click)="changeSort('name')">
