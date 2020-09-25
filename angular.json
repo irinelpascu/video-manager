@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "video-manager"
+    }
+  },
+  "defaultProject": "video-manager",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

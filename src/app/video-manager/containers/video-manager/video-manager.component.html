@@ -1,1 +1,18 @@
-<p>video-manager works!</p>
+<h1>Videos</h1>
+<mat-card class="mat-elevation-z2">
+  <div class="video-list-row">
+    <div class="col-a">Video name</div>
+    <div class="col-b">Author</div>
+    <div class="col-c">Category name</div>
+    <div class="col-d">Highest quality format</div>
+    <div class="col-e">Release date</div>
+    <div class="col-f"></div>
+  </div>
+  <app-video-item *ngFor="let video of videos$ | async" [routerLink]="['edit', video.authorId, video.id]"
+    [video]="video"
+    (delete)="onDelete(video.id)">
+  </app-video-item>
+</mat-card>
+<button mat-fab color="primary" [routerLink]="['new']">
+  <mat-icon>add</mat-icon>
+</button>

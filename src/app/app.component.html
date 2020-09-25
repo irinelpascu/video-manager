@@ -1,0 +1,12 @@
+<mat-toolbar color="primary">
+  <strong>Video Manager</strong>
+  <div class="user" [matMenuTriggerFor]="userMenu">
+    <span class="material-icons account">account_circle</span>
+    Admin User
+    <span class="material-icons arrow">arrow_drop_down</span>
+  </div>
+  <mat-menu #userMenu>
+    <mat-option routerLink="/manage">Manage Videos</mat-option>
+  </mat-menu>
+</mat-toolbar>
+<router-outlet></router-outlet>

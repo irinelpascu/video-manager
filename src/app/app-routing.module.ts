@@ -1,8 +1,15 @@
 import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import {
+  RouterModule,
+  Routes
+} from '@angular/router';
 
-
-const routes: Routes = [];
+const routes: Routes = [
+  {
+    path: 'manage',
+    loadChildren: () => import('./video-manager/video-manager.module').then(m => m.VideoManagerModule),
+  }
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

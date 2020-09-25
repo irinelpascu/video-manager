@@ -1,0 +1,12 @@
+:host {
+  display: block;
+  outline: none;
+
+  mat-card {
+    cursor: pointer;
+
+    &:hover {
+      background-color: lightgray;
+    }
+  }
+}

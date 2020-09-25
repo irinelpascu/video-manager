@@ -1,0 +1,23 @@
+:host {
+  flex: 1;
+  display: block;
+  padding: 24px 64px;
+  position: relative;
+
+  mat-card {
+    .video-list-row {
+      padding: 0 16px;
+      border-bottom: 1px solid lightgray;
+    }
+
+    app-video-item {
+      margin-top: 8px;
+    }
+  }
+
+  > button[mat-fab] {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+  }
+}

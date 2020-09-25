@@ -1,4 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  select,
+  Store
+} from '@ngrx/store';
+import { VideosModuleState } from '../../store/reducers';
+import { Observable } from 'rxjs';
+import { VideoUI } from '../../store/models';
+import { getVideos } from '../../store/selectors';
 
 @Component({
   selector: 'app-video-manager',
@@ -7,9 +18,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class VideoManagerComponent implements OnInit {
 
-  constructor() { }
+  videos$: Observable<VideoUI[]>;
 
-  ngOnInit(): void {
+  constructor(private store$: Store<VideosModuleState>) {
   }
 
+  ngOnInit(): void {
+    this.videos$ = this.store$.pipe(select(getVideos));
+  }
+
+  onDelete(videoId: number) {
+
+  }
 }

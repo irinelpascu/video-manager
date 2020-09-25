@@ -1,0 +1,22 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+
+  mat-toolbar {
+    .user {
+      display: flex;
+      align-items: center;
+      margin-left: auto;
+      cursor: pointer;
+
+      .account {
+        margin-right: 4px;
+      }
+
+      .arrow {
+        margin-left: 4px;
+      }
+    }
+  }
+}

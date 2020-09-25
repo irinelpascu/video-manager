@@ -1,0 +1,29 @@
+<h1>{{(video$ | async) ? 'Edit video: ' + (video$ | async).name : 'Add Video'}}</h1>
+<mat-card class="mat-elevation-z2">
+  <form [formGroup]="videoFormGroup" (ngSubmit)="onSubmit()">
+    <mat-form-field>
+      <mat-label>Video name</mat-label>
+      <input matInput formControlName="name">
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Video author</mat-label>
+      <mat-select formControlName="author">
+        <mat-option *ngFor="let author of authors$ | async" [value]="author.id">{{author.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <mat-form-field>
+      <mat-label>Video categories</mat-label>
+      <mat-select formControlName="categories" [multiple]="true">
+        <mat-option *ngFor="let category of categories$ | async" [value]="category.id">{{category.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br>
+    <br>
+    <button type="submit" mat-raised-button color="primary" [disabled]="videoFormGroup.invalid">
+      {{(video$ | async) ? 'Save' : 'Create'}}
+    </button>
+    <button type="button" mat-button color="accent" [routerLink]="['/manage']">Cancel</button>
+  </form>
+</mat-card>

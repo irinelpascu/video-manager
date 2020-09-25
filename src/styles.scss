@@ -13,7 +13,7 @@
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
 $video-manager-primary: mat-palette($mi-green);
-$video-manager-accent: mat-palette($mi-blue, A200, A100, A400);
+$video-manager-accent: mat-palette($mi-blue);
 
 // The warn palette is optional (defaults to red).
 $video-manager-warn: mat-palette($mi-red);
@@ -28,5 +28,41 @@ $video-manager-theme: mat-light-theme($video-manager-primary, $video-manager-acc
 
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.video-list-row {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+
+  .col-a {
+    flex: 1 1 200px;
+  }
+
+  .col-b {
+    flex: 1 1 200px;
+  }
+
+  .col-c {
+    flex: 1 1 200px;
+  }
+
+  .col-d {
+    flex: 1 1 200px;
+  }
+
+  .col-e {
+    flex: 1 1 200px;
+  }
+
+  .col-f {
+    flex: 0 0 40px;
+  }
+}
